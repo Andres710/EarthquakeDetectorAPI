@@ -1,0 +1,11 @@
+# Basic gitignore file
+
+# Virtual environment
+env/
+
+# Cache
+__pycache__
+
+# Text editor stuff
+.idea
+
