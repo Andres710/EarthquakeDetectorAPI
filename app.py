@@ -16,8 +16,11 @@ print(db)
 
 # Get all earthquakes
 @app.route('/earthquakes', methods=['GET'])
-def index():
-    earthquakes = earthquake_service.get_all_earthquakes()
+def get_all_earthquakes():
+    print(request.args)
+    country_filter = request.args.get('country')
+    city_filter = request.args.get('city')
+    earthquakes = earthquake_service.get_all_earthquakes_with_filter(country_filter, city_filter)
     return jsonify(earthquakes)
 
 
@@ -26,6 +29,26 @@ def index():
 def get_an_earthquake(identifier):
     print(identifier)
     earthquake = earthquake_service.get_an_earthquake(identifier)
+    print(earthquake)
+    if earthquake:
+        return jsonify(earthquake)
+    else:
+        data = {
+            'status_code': 404,
+            'message': 'There is no earthquake with the given identifier'
+        }
+        return data, 404
+
+
+@app.route('/earthquakes/strongest', methods=['GET'])
+def get_strongest_earthquake():
+    earthquake = earthquake_service.get_strongest_earthquake()
+    return jsonify(earthquake)
+
+
+@app.route('/earthquakes/weakest', methods=['GET'])
+def get_weakest_earthquake():
+    earthquake = earthquake_service.get_weakest_earthquake()
     return jsonify(earthquake)
 
 
@@ -35,6 +58,13 @@ def post_earthquake():
     req_data = request.json
     result = earthquake_service.post_earthquake(req_data)
     return jsonify(result)
+
+
+# Delete an earthquake using an identifier
+@app.route('/earthquakes/<identifier>', methods=['DELETE'])
+def delete_earthquake(identifier):
+    print(identifier)
+    return earthquake_service.delete_earthquake(identifier)
 
 
 if __name__ == "__main__":
