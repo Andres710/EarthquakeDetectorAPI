@@ -54,6 +54,6 @@ def delete_earthquake(identifier):
     if earthquake is not None:
         db.session.delete(earthquake)
         db.session.commit()
-        return "Deleted successfully."
+        return True
 
-    return "Earthquake with given identifier does not exist."
+    return False

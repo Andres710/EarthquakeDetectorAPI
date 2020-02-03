@@ -63,8 +63,19 @@ def post_earthquake():
 # Delete an earthquake using an identifier
 @app.route('/earthquakes/<identifier>', methods=['DELETE'])
 def delete_earthquake(identifier):
-    print(identifier)
-    return earthquake_service.delete_earthquake(identifier)
+    result = earthquake_service.delete_earthquake(identifier)
+    if result:
+        data = {
+            'status_code': 200,
+            'message': 'Earthquake deleted successfully.'
+        }
+        return jsonify(data), 200
+    else:
+        data = {
+            'status_code': 404,
+            'message': 'Earthquake with given identifier does not exist.'
+        }
+        return jsonify(data), 404
 
 
 if __name__ == "__main__":
