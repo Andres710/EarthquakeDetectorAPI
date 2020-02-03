@@ -51,6 +51,12 @@ def get_weakest_earthquake():
     earthquake = earthquake_service.get_weakest_earthquake()
     return jsonify(earthquake)
 
+# Gets the average magnitude from all earthquakes
+@app.route('/earthquakes/average', methods=['GET'])
+def get_average_magnitude():
+    result = earthquake_service.get_average_magnitude()
+    return jsonify(result)
+
 
 # Register a new earthquake
 @app.route('/earthquakes', methods=['POST'])

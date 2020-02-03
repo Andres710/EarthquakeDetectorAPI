@@ -40,6 +40,23 @@ def get_weakest_earthquake():
     return EarthquakeSchema().dump(earthquake)
 
 
+# Gets all earthquakes and calculates the average magnitude
+def get_average_magnitude():
+    earthquakes = db.session().query(Earthquake).all()
+    print(earthquakes)
+    length = len(earthquakes)
+    average = 0
+    for i in earthquakes:
+        average += i.magnitude
+    if length > 0:
+        average = average/length
+    response = {
+        'number_of_earthquakes': length,
+        'average_magnitude': average,
+    }
+    return response
+
+
 # Registers a new earthquake into the DB
 def post_earthquake(data):
     new_earthquake = Earthquake(data['country'], data['city'], data['date'], data['time'], data['magnitude'])
