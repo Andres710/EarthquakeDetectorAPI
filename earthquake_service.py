@@ -43,7 +43,6 @@ def get_weakest_earthquake():
 # Gets all earthquakes and calculates the average magnitude
 def get_average_magnitude():
     earthquakes = db.session.query(Earthquake).all()
-    print(earthquakes)
     length = len(earthquakes)
     average = 0
     for i in earthquakes:
