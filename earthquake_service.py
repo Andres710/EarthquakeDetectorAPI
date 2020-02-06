@@ -36,13 +36,13 @@ def get_strongest_earthquake():
 
 # Gets the weakest earthquake in the DB
 def get_weakest_earthquake():
-    earthquake = db.session().query(Earthquake).order_by(Earthquake.magnitude).first()
+    earthquake = db.session.query(Earthquake).order_by(Earthquake.magnitude).first()
     return EarthquakeSchema().dump(earthquake)
 
 
 # Gets all earthquakes and calculates the average magnitude
 def get_average_magnitude():
-    earthquakes = db.session().query(Earthquake).all()
+    earthquakes = db.session.query(Earthquake).all()
     print(earthquakes)
     length = len(earthquakes)
     average = 0
